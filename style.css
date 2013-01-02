@@ -34,10 +34,10 @@ h2 {
     top: 151px;
     width: 125px;
     z-index: 2;
-    transform: rotate(125deg);
-    -moz-transform:rotate(125deg);
-    -webkit-transform:rotate(125deg);
-    -ms-transform:rotate(125deg);
+    transform: rotate(135deg);
+    -moz-transform:rotate(135deg);
+    -webkit-transform:rotate(135deg);
+    -ms-transform:rotate(135deg);
 }
 .you .line {
     background-color: #555;
