@@ -1,139 +1,137 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
- <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Concentric Pie chart built with Flot</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script language="javascript" type="text/javascript" src="jquery.flot.js"></script>
-    <script language="javascript" type="text/javascript" src="jquery.flot.pie.js"></script>
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	    <title>Concentric Pie chart built with Flot</title>
+	    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script language="javascript" type="text/javascript" src="jquery.flot.js"></script>
+	    <script language="javascript" type="text/javascript" src="jquery.flot.pie.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.8.0/build/cssreset/cssreset-min.css">
-    <link rel="stylesheet" href="style.css">
+	    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.8.0/build/cssreset/cssreset-min.css">
+	    <link rel="stylesheet" href="style.css">
 	
-	<script type="text/javascript">
-	
-	$(function () {
+		<script type="text/javascript">
+		
+		$(function () {
 
-		// OUTER RING Example Data 
-		var data = [
-			{ label: "Stocks",  data: 40},
-			{ label: "Bonds",  data: 40},
-			{ label: "Cash",  data: 15},
-			{ label: "Futures",  data: 100}
-		];
-		// INNER RING Example Data
-		var data2 = [
-			{ label: "Stocks",  data: 80},
-			{ label: "Bonds",  data: 5},
-			{ label: "Mutual Funds",  data: 5},
-			{ label: "Futures",  data: 10}
-		];
+			// OUTER RING Example Data 
+			var data = [
+				{ label: "Stocks",  data: 40},
+				{ label: "Bonds",  data: 40},
+				{ label: "Cash",  data: 15},
+				{ label: "Futures",  data: 100}
+			];
+			// INNER RING Example Data
+			var data2 = [
+				{ label: "Stocks",  data: 80},
+				{ label: "Bonds",  data: 5},
+				{ label: "Mutual Funds",  data: 5},
+				{ label: "Futures",  data: 10}
+			];
 
-		// OUTER RING Builder
-	    $.plot($("#outer"), data2, 
-		{
-			series: {
-				pie: { 
-					innerRadius: 0.4,
-					show: true,
-					label: {
-							show: true,
-							radius: 0.55,
-							formatter: function(label, series){
-	                        return '<div>'+label+'<br/>'+Math.round(series.percent)+'%</div>';
-	                    },
-	                    threshold: 0.0
-					},
-					stroke: {
-						width: 0,
+			// OUTER RING Builder
+		    $.plot($("#outer"), data2, 
+			{
+				series: {
+					pie: { 
+						innerRadius: 0.4,
+						show: true,
+						label: {
+								show: true,
+								radius: 0.55,
+								formatter: function(label, series){
+		                        return '<div>'+label+'<br/>'+Math.round(series.percent)+'%</div>';
+		                    },
+		                    threshold: 0.0
+						},
+						stroke: {
+							width: 0,
+						}
 					}
-				}
-			},
-			grid: {
-				//hoverable: true,
-				//clickable: true
-			},
-			legend: {
-	            show: false
-	        },
-	        colors: ["#aed992", "#88a8df", "#8579c5", "#ccc"]		
-		});
-		$("#inner").bind("plothover", pieHover);
-		$("#inner").bind("plotclick", pieClick);
+				},
+				grid: {
+					//hoverable: true,
+					//clickable: true
+				},
+				legend: {
+		            show: false
+		        },
+		        colors: ["#aed992", "#88a8df", "#8579c5", "#ccc"]		
+			});
+			$("#inner").bind("plothover", pieHover);
+			$("#inner").bind("plotclick", pieClick);
 
 
-		// INNER RING Builder
-	    $.plot($("#inner"), data, 
-		{
-			series: {
-				pie: { 
-					innerRadius: 0.3,
-					show: true,
-					label: {
-							show: true,
-							radius: 0.5,
-							formatter: function(label, series){
-	                        return '<div>'+label+'<br/>'+Math.round(series.percent)+'%</div>';
-	                },
-	                threshold: 0.0
-					},
-					stroke: {
-						width: 0,
+			// INNER RING Builder
+		    $.plot($("#inner"), data, 
+			{
+				series: {
+					pie: { 
+						innerRadius: 0.3,
+						show: true,
+						label: {
+								show: true,
+								radius: 0.5,
+								formatter: function(label, series){
+		                        return '<div>'+label+'<br/>'+Math.round(series.percent)+'%</div>';
+		                },
+		                threshold: 0.0
+						},
+						stroke: {
+							width: 0,
+						}
 					}
-				}
 
 
-			},
-			grid: {
-				hoverable: true,
-				clickable: true
-			},
-			legend: {
-	            show: false
-	        },
-	        colors: ["#ddf8cc", "#c3d9ff", "#c2bddd", "#ddd"]
+				},
+				grid: {
+					hoverable: true,
+					clickable: true
+				},
+				legend: {
+		            show: false
+		        },
+		        colors: ["#ddf8cc", "#c3d9ff", "#c2bddd", "#ddd"]
+
+			});
+
 
 		});
 
+		// Pie Hover
+		function pieHover(event, pos, obj) 
+		{
+			if (!obj)
+		    return;
+			percent = parseFloat(obj.series.percent).toFixed(2);
+			$("#hover").html('<span style="font-weight: bold; color: '+obj.series.color+'">'+obj.series.label+' ('+percent+'%)</span>');
+		}
 
-	});
-
-	// Pie Hover
-	function pieHover(event, pos, obj) 
-	{
-		if (!obj)
-	    return;
-		percent = parseFloat(obj.series.percent).toFixed(2);
-		$("#hover").html('<span style="font-weight: bold; color: '+obj.series.color+'">'+obj.series.label+' ('+percent+'%)</span>');
-	}
-
-	// Pie Click
-	function pieClick(event, pos, obj) 
-	{
-		if (!obj)
-	   	return;
-		percent = parseFloat(obj.series.percent).toFixed(2);
-		alert(''+obj.series.label+': '+percent+'%');
-	}
-</script>
-</head>
-<body>
-    <h1>Overall Allocations</h1>	
-    <div class="container">
-    	<div class="recommended">
-    		<h2>Recommended</h2>
-    		<span class="line"></span>
-    		<div id="outer" class="outerpiechart"></div>
-    	</div>	
-    	<div class="you">
-    		<h2>You</h2>
-    		<span class="line"></span>
-    		<div id="inner" class="innerpiechart"></div>  
-    	</div>	  
- 	</div>
-
- 	<p>Concentric Pie chart built with <a href="http://www.flotcharts.org/">Flot</a></p>
- 	<p><a href="http://twitter.com/dosberg">@dosberg</a>
- </body>
+		// Pie Click
+		function pieClick(event, pos, obj) 
+		{
+			if (!obj)
+		   	return;
+			percent = parseFloat(obj.series.percent).toFixed(2);
+			alert(''+obj.series.label+': '+percent+'%');
+		}
+	</script>
+	</head>
+	<body>
+		<h1>Overall Allocations</h1>
+		<div class="container">
+			<div class="recommended">
+    			<h2>Recommended</h2>
+    			<span class="line"></span>
+    			<div id="outer" class="outerpiechart"></div>
+    		</div>
+    		<div class="you">
+    			<h2>You</h2>
+    			<span class="line"></span>
+    			<div id="inner" class="innerpiechart"></div>
+    		</div>
+    	</div>
+    	<p>Concentric Pie chart built with <a href="http://www.flotcharts.org/">Flot</a></p>
+    	<p><a href="http://twitter.com/dosberg">@dosberg</a>
+	</body>
 </html>
-
