@@ -18,7 +18,7 @@ h2 {
     position: absolute;
 }
 .recommended h2{
-    right: -80;
+    right: -80px;
     top: 80px;
     z-index: 2;
 }
